@@ -63,9 +63,13 @@ class NewLineupView(View):
         csvdata = request.POST['csvdata']
         zipcode = request.POST['zipcode']
         provider = request.POST['provider']
+        try:
+            lineup = Lineup.objects.create(zipcode=zipcode, provider=provider)
+            lineup.save()
 
-        lineup = Lineup.objects.create(zipcode=zipcode, provider=provider)
-        lineup.save()
+        except:
+            print "hit exception creating linup"
+
         print csvdata
         lines = csvdata.split('\r\n')
 
